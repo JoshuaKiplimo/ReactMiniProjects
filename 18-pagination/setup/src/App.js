@@ -3,23 +3,9 @@ import { useFetch } from "./useFetch";
 import Follower from "./Follower";
 
 function App() {
-  //const processData = () => {
   const { loading, data } = useFetch();
-  const [paginate, setPaginate] = useState([]);
   const [currentPage, setCurrentPage] = useState([]);
   const [page, setPage] = useState(0);
-
-  console.log(loading);
-  const paginateData = () => {
-    const itemPerPage = 10;
-    const pages = Math.ceil(data.length / itemPerPage);
-    const newItems = Array.from({ length: pages }, (_, index) => {
-      const start = index * itemPerPage;
-      const tempItems = data.slice(start, start + itemPerPage);
-      return tempItems;
-    });
-    return newItems;
-  };
   const foward = () => {
     page >= 9 ? setPage(0) : setPage(page + 1);
   };
@@ -28,24 +14,15 @@ function App() {
   };
   const manageClick = (e) => {
     const targetPage = parseInt(e.target.innerText) - 1;
-    console.log("target", targetPage);
     setPage(targetPage);
-    setCurrentPage(paginate[page]);
+    setCurrentPage(data[page]);
   };
 
   useEffect(() => {
     if (loading) return;
-    setPaginate(paginateData());
-    setCurrentPage(data.slice(0, 10));
-  }, [loading]);
+    setCurrentPage(data[page]);
+  }, [loading, page]);
 
-  useEffect(() => {
-    if (loading) return;
-    setCurrentPage(paginate[page]);
-  }, [page]);
-
-  //console.log("paginated values", paginate);
-  console.log("current page last console log", currentPage);
   return (
     <>
       <main>
@@ -63,7 +40,7 @@ function App() {
             <button className="prev-btn" onClick={back}>
               Prev
             </button>
-            {paginate.map((_, index) => {
+            {data.map((_, index) => {
               return (
                 <button
                   className={`${

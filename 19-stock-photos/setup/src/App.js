@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import Photo from "./Photo";
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`;
@@ -8,17 +8,31 @@ const searchUrl = `https://api.unsplash.com/search/photos/`;
 function App() {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
+  const searchRef = useRef();
+  const [query, setQuery] = useState("");
+
   const fetchData = async () => {
     try {
       setLoading(true);
       let url;
       const urlPage = `&page=${page}`;
-      url = `${mainUrl}${clientID}${urlPage}`;
+      const queryUrl = `&query=`;
+      if (query) {
+        url = `${searchUrl}${clientID}${queryUrl}${query}`;
+      } else {
+        url = `${mainUrl}${clientID}${urlPage}`;
+      }
       const response = await fetch(url);
       const data = await response.json();
       setPhotos((oldPhotos) => {
-        return [...oldPhotos, ...data];
+        if (query && page === 1) {
+          return data.results;
+        } else if (query) {
+          return [...oldPhotos, ...data.results];
+        } else {
+          return [...oldPhotos, ...data];
+        }
       });
       setLoading(false);
     } catch (error) {
@@ -44,6 +58,12 @@ function App() {
     return () => window.removeEventListener("scroll", event);
   }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //fetchData();
+    setPage(1);
+  };
+
   return (
     <main>
       <section className="search">
@@ -52,8 +72,11 @@ function App() {
             type="text"
             className="form-input"
             placeholder="search"
+            ref={searchRef}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
           ></input>
-          <button type="submit" className="submit-btn">
+          <button type="submit" className="submit-btn" onClick={handleSubmit}>
             <FaSearch />
           </button>
         </form>

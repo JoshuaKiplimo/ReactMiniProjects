@@ -1,26 +1,32 @@
-const useFetch = async (url) => {
-  try {
+import React, { useState, useEffect } from "react";
+
+const API_ENDPOINT = `https://www.omdbapi.com/?apikey=5325b077`;
+
+export const useFetch = (urlParams) => {
+  const [posters, setPosters] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({ isError: false, message: "" });
+
+  const fetchMovies = async (url) => {
     setLoading(true);
 
-    if (searchValue) {
-      console.log("searchvAALUE", searchValue);
-      const search = `=${searchValue}`;
-      let url = `${API_ENDPOINT}${search}`;
+    try {
       const response = await fetch(url);
       const data = await response.json();
-      console.log(data);
       if (data.Response == "True") {
-        console.log(data.Response);
         setPosters(data.Search);
       } else if (data.Response == "False") {
-        console.log("response false", data.Error);
         setError({ isError: true, message: data.Error });
-        //Note that you should reset error back to false if we have data in out setPosters
       }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
     }
-    setLoading(false);
-  } catch (error) {
-    setLoading(false);
-    console.log(error);
-  }
+
+    useEffect(() => {
+      fetchMovies(`${API_ENDPOINT}${urlParams}`);
+    }, [urlParams]);
+
+    return { loading, error, posters };
+  };
 };

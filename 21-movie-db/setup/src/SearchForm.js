@@ -11,10 +11,7 @@ const SearchForm = () => {
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
       ></input>
-      <div className="error">
-        {" "}
-        {error.isError && <span>{error.message}</span>}
-      </div>
+      <div className="error">{error.isError && error.message}</div>
     </form>
   );
 };

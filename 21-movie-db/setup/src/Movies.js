@@ -5,14 +5,14 @@ const url =
   "https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png";
 //Get data
 const Movies = () => {
-  const { loading, posters, setError } = useGlobalContext();
+  const { loading, data } = useGlobalContext();
   if (loading) {
     return <h2>Loading ...</h2>;
   }
 
   return (
     <section className="movies">
-      {posters.map((poster) => {
+      {data.map((poster) => {
         const { Title, Year, imdbID, Poster } = poster;
         return (
           <Link to={`${"/movies/"}${imdbID}`} className="movie" key={imdbID}>

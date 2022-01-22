@@ -1,0 +1,26 @@
+const useFetch = async (url) => {
+  try {
+    setLoading(true);
+
+    if (searchValue) {
+      console.log("searchvAALUE", searchValue);
+      const search = `=${searchValue}`;
+      let url = `${API_ENDPOINT}${search}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data);
+      if (data.Response == "True") {
+        console.log(data.Response);
+        setPosters(data.Search);
+      } else if (data.Response == "False") {
+        console.log("response false", data.Error);
+        setError({ isError: true, message: data.Error });
+        //Note that you should reset error back to false if we have data in out setPosters
+      }
+    }
+    setLoading(false);
+  } catch (error) {
+    setLoading(false);
+    console.log(error);
+  }
+};

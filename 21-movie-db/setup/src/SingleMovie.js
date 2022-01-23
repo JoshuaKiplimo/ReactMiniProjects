@@ -4,14 +4,14 @@ import useFetch from "./useFetch";
 
 const SingleMovie = () => {
   const { imdbID } = useParams();
-  const { loading, error, poster: data } = useFetch(`&i=${imdbID}`);
+  const { loading, error, posters: movie } = useFetch(`&i=${imdbID}`);
 
-  if (loading) {
+  if (loading || movie == null) {
     return <h3>loading...</h3>;
   }
   if (error) {
   }
-  const { Poster, Title, Plot, Year } = data;
+  const { Poster, Title, Plot, Year } = movie;
   return (
     <section className="single-movie">
       <img src={Poster}></img>

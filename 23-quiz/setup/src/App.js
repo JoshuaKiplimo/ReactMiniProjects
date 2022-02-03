@@ -5,9 +5,12 @@ import SetupForm from "./SetupForm";
 import Loading from "./Loading";
 import Modal from "./Modal";
 function App() {
-  const { isLoading } = useGlobalContext();
+  const { isLoading, start } = useGlobalContext();
   if (isLoading) {
     return <Loading />;
+  }
+  if (!start) {
+    return <Modal />;
   }
   return <SetupForm />;
 }

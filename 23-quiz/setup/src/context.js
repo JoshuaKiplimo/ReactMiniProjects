@@ -13,16 +13,18 @@ const url = "";
 const initialURL =
   "https://opentdb.com/api.php?amount=10&category=21&difficulty=easy";
 const AppContext = React.createContext();
-
 const AppProvider = ({ children }) => {
   const [questions, setQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [index, setIndex] = useState(0);
+  const [start, setStart] = useState(false);
+
   const fetchData = async () => {
     try {
       setIsLoading(true);
       const response = await fetch(initialURL);
+      console.log(response);
       const data = await response.json();
       console.log(data);
       if (data) {
@@ -54,16 +56,22 @@ const AppProvider = ({ children }) => {
       console.log(error);
     }
   };
+  const handleStart = () => {
+    setStart(true);
+  };
+
   const handleNext = () => {
     //Make sure you change this
     index >= questions.length ? setIndex(0) : setIndex(index + 1);
   };
+
   const handleAnswers = (e, correct_answer) => {
     if (e.target.innerText === correct_answer) {
       setCorrectAnswers(correctAnswers + 1);
     }
     handleNext();
   };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -77,6 +85,8 @@ const AppProvider = ({ children }) => {
         index,
         handleNext,
         handleAnswers,
+        handleStart,
+        start,
       }}
     >
       {children}

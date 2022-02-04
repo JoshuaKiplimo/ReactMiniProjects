@@ -10,35 +10,64 @@ const shuffleArray = (array) => {
   return array;
 };
 const SetupForm = () => {
-  const { questions, index, handleNext, handleAnswers, correctAnswers } =
-    useGlobalContext();
+  const {
+    questions,
+    index,
+    handleNext,
+    handleAnswers,
+    correctAnswers,
+    isEnd,
+    setStart,
+  } = useGlobalContext();
   if (questions.length == 0) {
     return <h1>loading</h1>;
   }
+
+  const questionNumber = questions.length;
+  console.log("question no", questionNumber);
+  console.log("index", index);
+
   const { question, correct_answer, choices } = questions[index];
 
   return (
-    <section className="quiz">
-      <p className="correct-answers"> {`Correct Answers: ${correctAnswers}`}</p>
-      <article className="container">
-        <h2>{question}</h2>
-        <div className="btn-container">
-          {shuffleArray(choices).map((choice) => {
-            return (
-              <button
-                className="answer-btn"
-                onClick={(e) => handleAnswers(e, correct_answer)}
-              >
-                {choice}
-              </button>
-            );
-          })}
+    <>
+      <div className={isEnd ? `modal-container isOpen` : `modal-container`}>
+        <div className="modal-content">
+          <h2>Congrats!</h2>
+          <p>
+            {`You answered ${
+              (correctAnswers / questionNumber) * 100
+            }% of questions
+            correctly`}
+          </p>
+          <button className="close-btn">play again</button>
         </div>
-      </article>
-      <button className="next-question" onClick={handleNext}>
-        Next Question
-      </button>
-    </section>
+      </div>
+      <section className="quiz">
+        <p className="correct-answers">
+          {`Correct Answers: ${correctAnswers} out of ${questionNumber}`}
+        </p>
+        <article className="container">
+          <h2>{question}</h2>
+          <div className="btn-container">
+            {shuffleArray(choices).map((choice, index) => {
+              return (
+                <button
+                  key={index}
+                  className="answer-btn"
+                  onClick={(e) => handleAnswers(e, correct_answer)}
+                >
+                  {choice}
+                </button>
+              );
+            })}
+          </div>
+        </article>
+        <button className="next-question" onClick={handleNext}>
+          Next Question
+        </button>
+      </section>
+    </>
   );
 };
 

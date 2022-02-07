@@ -18,14 +18,13 @@ const SetupForm = () => {
     correctAnswers,
     isEnd,
     setStart,
+    replayGame,
   } = useGlobalContext();
   if (questions.length == 0) {
     return <h1>loading</h1>;
   }
 
   const questionNumber = questions.length;
-  console.log("question no", questionNumber);
-  console.log("index", index);
 
   const { question, correct_answer, choices } = questions[index];
 
@@ -35,12 +34,14 @@ const SetupForm = () => {
         <div className="modal-content">
           <h2>Congrats!</h2>
           <p>
-            {`You answered ${
+            {`You answered ${Math.round(
               (correctAnswers / questionNumber) * 100
-            }% of questions
+            )}% of questions
             correctly`}
           </p>
-          <button className="close-btn">play again</button>
+          <button className="close-btn" onClick={replayGame}>
+            play again
+          </button>
         </div>
       </div>
       <section className="quiz">

@@ -2,7 +2,7 @@ import React from "react";
 import { useGlobalContext } from "./context";
 
 const Modal = () => {
-  const { handleStart, handleChange } = useGlobalContext();
+  const { handleStart, handleChange, input } = useGlobalContext();
   return (
     <section className="quiz quiz-small">
       <form className="setup-form" onSubmit={(e) => handleStart(e)}>
@@ -17,6 +17,7 @@ const Modal = () => {
             min="1"
             max="50"
             defaultValue="10"
+            value={input.amount}
             onChange={handleChange}
           ></input>
         </div>
@@ -26,6 +27,7 @@ const Modal = () => {
             name="category"
             id="category"
             className="form-input"
+            value={input.category}
             onChange={handleChange}
           >
             <option defaultValue="sports">sports</option>
@@ -39,6 +41,7 @@ const Modal = () => {
             name="difficulty"
             id="difficulty"
             className="form-input"
+            value={input.difficulty}
             onChange={handleChange}
           >
             <option defaultValue="easy">easy</option>

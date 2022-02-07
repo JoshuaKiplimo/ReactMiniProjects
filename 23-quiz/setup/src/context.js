@@ -20,13 +20,8 @@ const AppProvider = ({ children }) => {
     amount: "10",
     difficulty: "easy",
   });
-  const API_ENDPOINT = "https://opentdb.com/api.php?";
-  const URL_constructor = `amount=${input.amount}&category=${
-    table[input.category]
-  }&difficulty=${input.difficulty}`;
-  const url = `${API_ENDPOINT}${URL_constructor}`;
-  console.log(url);
-  const fetchData = async () => {
+
+  const fetchData = async (url) => {
     try {
       setIsLoading(true);
       const response = await fetch(url);
@@ -63,7 +58,14 @@ const AppProvider = ({ children }) => {
   };
   const handleStart = (e) => {
     e.preventDefault();
-    console.log("he");
+    const API_ENDPOINT = "https://opentdb.com/api.php?";
+    const URL_constructor = `amount=${input.amount}&category=${
+      table[input.category]
+    }&difficulty=${input.difficulty}`;
+    const url = `${API_ENDPOINT}${URL_constructor}`;
+    fetchData(url);
+    setIsEnd(false);
+    setCorrectAnswers(0);
     setStart(true);
   };
   const handleChange = (e) => {
@@ -87,11 +89,11 @@ const AppProvider = ({ children }) => {
     }
     handleNext();
   };
-
-  useEffect(() => {
-    fetchData();
-  }, [url]);
-  console.log(start);
+  const replayGame = () => {
+    console.log("end");
+    setIsEnd(true);
+    setStart(false);
+  };
 
   return (
     <AppContext.Provider
@@ -108,6 +110,8 @@ const AppProvider = ({ children }) => {
         isEnd,
         setIsEnd,
         setStart,
+        input,
+        replayGame,
       }}
     >
       {children}

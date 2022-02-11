@@ -1,8 +1,18 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 const Error = () => {
-  return <h2>error page</h2>;
+  return (
+    <Wrapper>
+      <div>
+        <h1>404</h1>
+        <h3>Sorry the page you are looking for cannot be found</h3>
+        <Link to="/" className="btn">
+          Back Home
+        </Link>
+      </div>
+    </Wrapper>
+  );
 };
 const Wrapper = styled.section`
   min-height: 100vh;
@@ -11,7 +21,7 @@ const Wrapper = styled.section`
   background: var(--clr-primary-10);
   text-align: center;
   h1 {
-    font-size: 10rem;
+    font-size: 13rem;
   }
   h3 {
     color: var(--clr-grey-3);

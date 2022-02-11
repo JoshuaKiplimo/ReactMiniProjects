@@ -1,9 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useAuth0 } from '@auth0/auth0-react';
-
+import React from "react";
+import styled from "styled-components";
+import { useAuth0 } from "@auth0/auth0-react";
+import mockUser from "../context/mockData.js/mockUser";
+const { name } = mockUser;
 const Navbar = () => {
-  return <h2>navbar component</h2>;
+  return (
+    <Wrapper>
+      <nav>
+        <h4>Welcome, {name}</h4>
+      </nav>
+      <button>Logout</button>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.nav`

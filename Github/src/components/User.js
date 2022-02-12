@@ -5,24 +5,10 @@ import Followers from "./Followers";
 import { GithubContext } from "../context/context";
 
 const User = () => {
-  const data = React.useContext(GithubContext);
-  console.log(data.mockUser);
-
   return (
     <Wrapper>
-      <section className="section">
-        <div className="section-center">
-          <article>
-            <header>
-              <img></img>
-              <div>
-                <h4></h4>
-                <p></p>
-              </div>
-            </header>
-          </article>
-        </div>
-      </section>
+      <Card></Card>
+      <Followers></Followers>
     </Wrapper>
   );
 };

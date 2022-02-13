@@ -4,11 +4,32 @@ import mockUser from "../context/mockData.js/mockUser";
 import { RiGitRepositoryLine } from "react-icons/ri";
 import { FiUsers, FiUserPlus } from "react-icons/fi";
 import { GoFileCode } from "react-icons/go";
+import { GithubContext } from "../context/context";
 import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from "./Charts";
 const Repos = () => {
-  const { public_repos, followers, following, public_gists } = mockUser;
+  const { repos } = React.useContext(GithubContext);
+  const chartData = [
+    {
+      label: "HTML",
+      value: "13",
+    },
+    {
+      label: "CSS",
+      value: "270",
+    },
+    {
+      label: "Javascript",
+      value: "45",
+    },
+  ];
 
-  return <p>repos</p>;
+  return (
+    <section className="section">
+      <Wrapper className="section-center">
+        <ExampleChart data={chartData} />
+      </Wrapper>
+    </section>
+  );
 };
 
 const Wrapper = styled.div`

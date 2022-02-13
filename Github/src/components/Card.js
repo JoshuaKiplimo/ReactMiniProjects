@@ -15,7 +15,7 @@ const Card = () => {
     twitter_username,
   } = githubUser;
   return (
-    <Wrapper>
+    <Wrapper className="section-center">
       <header>
         <img src={avatar_url} alt={name}></img>
         <div>

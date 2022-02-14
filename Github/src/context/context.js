@@ -14,8 +14,13 @@ const GithubProvider = ({ children }) => {
   const [githubUser, setGithubUser] = useState(mockUser);
   const [repos, setRepos] = useState(mockRepos);
   const [followers, setFollowers] = useState(mockFollowers);
+  const fetchData = async (url) => {
+    const data = await fetch(url);
+    const languages = await data.json();
+    return languages;
+  };
   return (
-    <GithubContext.Provider value={{ repos, githubUser, followers }}>
+    <GithubContext.Provider value={{ repos, githubUser, followers, fetchData }}>
       {children}
     </GithubContext.Provider>
   );

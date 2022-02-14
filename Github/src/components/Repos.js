@@ -32,20 +32,6 @@ const Repos = () => {
   });
 
   console.log(chartData);
-  // {
-  //   label: "HTML",
-  //   value: "13",
-  // },
-  // {
-  //   label: "CSS",
-  //   value: "270",
-  // },
-  // {
-  //   label: "Javascript",
-  //   value: "45",
-  // },
-
-  //Find most used languages. And pass it into ChartData
 
   return (
     <section className="section">

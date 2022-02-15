@@ -10,34 +10,33 @@ import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from "./Charts";
 const Repos = () => {
   const { repos, fetchData } = React.useContext(GithubContext);
   //console.log(repos);
-  const languagesMap = new Map();
-  const languages = repos.map((repo) => {
-    //console.log(language.language);
-    if (repo.language) {
-      if (languagesMap.has(repo.language)) {
-        languagesMap.set(repo.language, languagesMap.get(repo.language) + 1); //languagesMap.set(repolanguage, value + 1);
-      } else {
-        languagesMap.set(repo.language, 1);
-      }
+
+  let languages = repos.reduce((total, item) => {
+    const { language } = item;
+    if (!language) return total;
+    if (!total[language]) {
+      total[language] = { label: language, value: 1 };
+    } else {
+      total[language] = {
+        ...total[language],
+        value: total[language].value + 1,
+      };
     }
-  });
-  console.log(languagesMap);
-  const chartData = [];
+    return total;
+  }, {});
+  console.log(languages);
 
-  languagesMap.forEach((val, key) => {
-    chartData.push({
-      label: key,
-      value: val.toString(),
-    });
-  });
-
-  console.log(chartData);
+  languages = Object.values(languages)
+    .sort((a, b) => {
+      return b.value - a.value;
+    })
+    .slice(0, 5);
 
   return (
     <section className="section">
       <Wrapper className="section-center">
         {/* <ExampleChart data={chartData} /> */}
-        <Pie3D data={chartData} />
+        <Pie3D data={languages} />
       </Wrapper>
     </section>
   );

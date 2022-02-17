@@ -6,7 +6,7 @@ const Followers = () => {
   const { followers } = React.useContext(GithubContext);
   const {} = followers;
   return (
-    <Wrapper className="section-center">
+    <Wrapper>
       <div className="followers">
         {followers.map((follower, index) => {
           const { avatar_url: img, html_url, login } = follower;

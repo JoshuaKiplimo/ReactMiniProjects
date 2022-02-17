@@ -6,7 +6,7 @@ import { GithubContext } from "../context/context";
 
 const User = () => {
   return (
-    <Wrapper>
+    <Wrapper className="section-center">
       <Card></Card>
       <Followers></Followers>
     </Wrapper>

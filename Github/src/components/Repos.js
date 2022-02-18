@@ -95,11 +95,9 @@ const Wrapper = styled.div`
   @media (min-width: 800px) {
     grid-template-columns: 1fr 1fr;
   }
-
   @media (min-width: 1200px) {
     grid-template-columns: 2fr 3fr;
   }
-
   div {
     width: 100% !important;
   }

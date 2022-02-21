@@ -4,6 +4,7 @@ import { MdSearch } from "react-icons/md";
 import { GithubContext } from "../context/context";
 const Search = () => {
   const [user, setUser] = React.useState("");
+  const { request } = React.useContext(GithubContext);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (user) {
@@ -12,8 +13,8 @@ const Search = () => {
   };
   return (
     <section className="section">
-      <Wrapper>
-        <div className="section-center">
+      <Wrapper className="section-center">
+        <div>
           <form onSubmit={(e) => handleSubmit(e)}>
             <div className="form-control">
               <MdSearch></MdSearch>
@@ -27,7 +28,7 @@ const Search = () => {
             </div>
           </form>
         </div>
-        <h3>requests 60: 60</h3>
+        <h3>{`Remaining requests ${request}: 60`}</h3>
       </Wrapper>
     </section>
   );

@@ -43,7 +43,9 @@ const GithubProvider = ({ children }) => {
     console.log("loaded");
   }, []);
   return (
-    <GithubContext.Provider value={{ repos, githubUser, followers, fetchData }}>
+    <GithubContext.Provider
+      value={{ repos, githubUser, followers, fetchData, request }}
+    >
       {children}
     </GithubContext.Provider>
   );

@@ -6,6 +6,7 @@ const { name } = mockUser;
 const Navbar = () => {
   return (
     <Wrapper>
+      <p>nav</p>
       <nav>
         <h4>Welcome, {name}</h4>
       </nav>

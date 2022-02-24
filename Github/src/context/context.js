@@ -20,7 +20,7 @@ const GithubProvider = ({ children }) => {
 
   const searchGithubUser = async (user) => {
     toggleError();
-    //setLoading(true)
+    setIsLoading(true);
     const response = await axios(`${rootUrl}/users/${user}`).catch((err) =>
       console.log(err)
     );
@@ -28,14 +28,13 @@ const GithubProvider = ({ children }) => {
     if (response) {
       setGithubUser(response.data);
       const { login, followers_url } = response.data;
-      //repos
-      axios(`${rootUrl}/users/${login}/repos?per_page=100`).then((response) =>
-        setRepos(response.data)
-      );
-      //followers
-      axios(`${followers_url}?per_page=100`).then((response) =>
-        setFollowers(response.data)
-      );
+      await Promise.allSettled([
+        axios(`${rootUrl}/users/${login}/repos?per_page=100`),
+        axios(`${followers_url}?per_page=100`),
+        axios(`${followers_url}?per_page=100`),
+      ]).then((result) => {
+        console.log(result);
+      });
     } else {
       toggleError(true, "there is no user with that user name");
     }
@@ -63,8 +62,6 @@ const GithubProvider = ({ children }) => {
   }
   useEffect(() => {
     checkRequests();
-    console.log("loaded");
-    console.log(error);
   }, []);
 
   return (

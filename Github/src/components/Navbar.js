@@ -4,13 +4,23 @@ import { useAuth0 } from "@auth0/auth0-react";
 import mockUser from "../context/mockData.js/mockUser";
 const { name } = mockUser;
 const Navbar = () => {
+  const { isAuthenticated, loginWithRedirect, logout, user, isLoading } =
+    useAuth0();
   return (
     <Wrapper>
       <p>nav</p>
       <nav>
         <h4>Welcome, {name}</h4>
       </nav>
-      <button>Logout</button>
+      <button onClick={() => loginWithRedirect()}>Log In</button>;
+      <button
+        onClick={() => {
+          logout({ returnTo: window.location.origin });
+        }}
+      >
+        Log Out
+      </button>
+      ;
     </Wrapper>
   );
 };

@@ -6,36 +6,27 @@ const { name } = mockUser;
 const Navbar = () => {
   const { isAuthenticated, loginWithRedirect, logout, user, isLoading } =
     useAuth0();
-  const isuser = isAuthenticated && user;
-  
+  const isUser = isAuthenticated && user;
+
   return (
     <Wrapper>
       {isUser && user.picture && <img src={user.picture} alt={user.name} />}
-      {isUser && user.name && <h4>Welcome <strong>{ user.name.toUpperCase()}</strong></h4>}
-      {isUser ?
+      {isUser && user.name && (
+        <h4>
+          Welcome <strong>{user.name.toUpperCase()}</strong>
+        </h4>
+      )}
+      {isUser ? (
         <button
-          onClick={
-            () => {
-              logout({returnTo: window.location.origin})
-            }
-        }
+          onClick={() => {
+            logout({ returnTo: window.location.origin });
+          }}
         >
           Logout
-       </button>  
-    }
-      <p>nav</p>
-      <nav>
-        <h4>Welcome, {name}</h4>
-      </nav>
-      <button onClick={() => loginWithRedirect()}>Log In</button>;
-      <button
-        onClick={() => {
-          logout({ returnTo: window.location.origin });
-        }}
-      >
-        Log Out
-      </button>
-      ;
+        </button>
+      ) : (
+        <button onClick={() => loginWithRedirect()}>Log In</button>
+      )}
     </Wrapper>
   );
 };
